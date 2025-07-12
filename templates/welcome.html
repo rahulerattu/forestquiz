@@ -1,9 +1,37 @@
 <!DOCTYPE html>
-<html>
-<head><title>Welcome to ZenCareer</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forest Path Career Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
 <body>
-  <h1>🌲 Welcome to Your Forest Path Quiz</h1>
-  <p>Discover your ideal career path through a mystical journey.</p>
-  <a href="/quiz">Start the Quiz</a>
+
+<div class="forest-overlay"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+
+<div class="container">
+  <header>
+    <h1>🌲 Welcome to the Forest Path Quiz 🌲</h1>
+    <p class="tagline">Discover your unique career trail based on your personality, interests, and purpose.</p>
+  </header>
+
+  <main>
+    <p class="intro">This is no ordinary quiz. It's a journey through the forest of your mind — inspired by ancient wisdom, psychology, and purpose-driven paths. Walk along the trail and discover careers that truly match your nature.</p>
+    <a href="{{ url_for('quiz') }}" class="start-button">Start Your Journey</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Forest Career Quiz | Crafted with 🍃 by Rahul</p>
+  </footer>
+</div>
+
 </body>
 </html>
+

@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url('/static/img/forest-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  overflow-x: hidden;
+}
+
+.forest-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 30, 0, 0.5); /* dark green overlay */
+  z-index: -1;
+}
+
+@keyframes firefly {
+  0% { opacity: 0; transform: translateY(0) scale(1); }
+  50% { opacity: 1; transform: translateY(-20px) scale(1.1); }
+  100% { opacity: 0; transform: translateY(0) scale(1); }
+}
+
+.firefly {
+  position: absolute;
+  background: yellow;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: firefly 3s infinite;
+}
+
+.firefly:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+.firefly:nth-child(2) { top: 40%; left: 75%; animation-delay: 1s; }
+.firefly:nth-child(3) { top: 60%; left: 35%; animation-delay: 2s; }
+.firefly:nth-child(4) { top: 80%; left: 55%; animation-delay: 1.5s; }
+.firefly:nth-child(5) { top: 10%; left: 65%; animation-delay: 2.5s; }

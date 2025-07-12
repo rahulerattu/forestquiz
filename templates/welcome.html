@@ -6,6 +6,7 @@
   <title>Forest Path Career Quiz</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
 
@@ -17,21 +18,55 @@
 <div class="firefly"></div>
 
 <div class="container">
-  <header>
-    <h1>🌲 Welcome to the Forest Path Quiz 🌲</h1>
-    <p class="tagline">Discover your unique career trail based on your personality, interests, and purpose.</p>
+  <header id="hero-header">
+    <h1>🐧 Welcome to the Penguin's Career Quest 🌍</h1>
+    <p class="tagline">Join Baby Penguin on a magical adventure through the wonders of the world — and discover your true career calling!</p>
   </header>
 
   <main>
-    <p class="intro">This is no ordinary quiz. It's a journey through the forest of your mind — inspired by ancient wisdom, psychology, and purpose-driven paths. Walk along the trail and discover careers that truly match your nature.</p>
-    <a href="{{ url_for('quiz') }}" class="start-button">Start Your Journey</a>
+    <p class="intro">Each question takes Baby Penguin to a new breathtaking destination — from the mystical ruins of Chichen Itza to the glowing Aurora skies. With every answer, you'll step closer to uncovering your ideal career path.</p>
+    <a href="{{ url_for('quiz') }}" class="start-button">Start the Journey</a>
   </main>
 
   <footer>
-    <p>&copy; 2025 Forest Career Quiz | Crafted with 🍃 by Rahul</p>
+    <p>&copy; 2025 Penguin Career Quest | Crafted with ❤️ by Rahul</p>
   </footer>
 </div>
 
+<script>
+  window.addEventListener("load", () => {
+    gsap.from("#hero-header", {
+      opacity: 0,
+      y: -50,
+      duration: 1.2,
+      ease: "power2.out"
+    });
+
+    gsap.from(".intro", {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      delay: 0.5,
+      ease: "power1.out"
+    });
+
+    gsap.from(".start-button", {
+      scale: 0,
+      duration: 0.8,
+      delay: 1,
+      ease: "back.out(1.7)"
+    });
+
+    gsap.to(".firefly", {
+      x: () => Math.random() * 100 - 50,
+      y: () => Math.random() * 100 - 50,
+      repeat: -1,
+      yoyo: true,
+      duration: 3,
+      ease: "sine.inOut"
+    });
+  });
+</script>
+
 </body>
 </html>
-

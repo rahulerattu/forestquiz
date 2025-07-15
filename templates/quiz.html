@@ -1,19 +1,160 @@
 <!DOCTYPE html>
-<html>
-<head><title>Quiz - ZenCareer</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forest Career Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background-color: #e0f7fa;
+      color: #004d40;
+    }
+    .quiz-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+    }
+    video {
+      max-width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    .question-panel {
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 128, 128, 0.2);
+      width: 90%;
+      max-width: 700px;
+      text-align: center;
+      display: none;
+    }
+    .character-panel {
+      margin-top: 1rem;
+      width: 120px;
+      height: 120px;
+    }
+    .answer-buttons {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .answer-buttons button {
+      padding: 0.7rem 1rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #00bfa5;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .answer-buttons button:hover {
+      background-color: #00897b;
+    }
+  </style>
+</head>
 <body>
-  <h2>Forest Life Path Quiz</h2>
-  <form method="POST">
-    <label>What brings you the most joy?</label><br>
-    <input type="radio" name="q1" value="helping">Helping others<br>
-    <input type="radio" name="q1" value="building">Building things<br>
-    <input type="radio" name="q1" value="exploring">Exploring ideas<br><br>
-    
-    <label>Preferred working environment?</label><br>
-    <input type="radio" name="q2" value="quiet">Quiet and calm<br>
-    <input type="radio" name="q2" value="dynamic">Fast-paced and social<br><br>
 
-    <button type="submit">See My Results</button>
-  </form>
+<div class="quiz-container">
+  <video id="travelVideo" width="800" autoplay muted>
+    <source src="{{ url_for('static', filename='video/world_journey.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="question-panel" id="questionPanel">
+    <h2 id="questionText">Loading question...</h2>
+    <div class="answer-buttons" id="answerButtons">
+      <button onclick="submitAnswer('A')">Option A</button>
+      <button onclick="submitAnswer('B')">Option B</button>
+      <button onclick="submitAnswer('C')">Option C</button>
+      <button onclick="submitAnswer('D')">Option D</button>
+    </div>
+  </div>
+
+  <div class="character-panel" id="characterReaction"></div>
+</div>
+
+<script>
+  const questions = [
+    "🌸 What do you enjoy doing that makes you lose track of time?",
+    "🔍 Which activity do people often ask you for help with?",
+    "💡 What skill or activity feels most meaningful to you?",
+    "🌱 What would you still do even if you weren’t paid for it?",
+    "🔥 Do you act before thinking or think before acting?",
+    "🌊 Are you more calm, assertive, or restless by nature?",
+    "🌞 Do you find peace in solitude or thrive in busy environments?",
+    "⚖️ What drives your decisions: duty, ambition, or joy?",
+    // Add more...
+  ];
+  
+  const totalQuestions = questions.length;
+  const video = document.getElementById('travelVideo');
+  const questionPanel = document.getElementById('questionPanel');
+  const questionText = document.getElementById('questionText');
+  const characterReaction = document.getElementById('characterReaction');
+  const pet = localStorage.getItem('selectedPet') || 'panda';
+  const nickname = localStorage.getItem('nickname') || 'Explorer';
+
+  let currentQuestion = 0;
+  let stopIntervals = [];
+  const intervalSeconds = 6;
+
+  const loadLottieReaction = () => {
+    const path = `/static/lottie/${pet}.json`;
+    lottie.loadAnimation({
+      container: characterReaction,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: path
+    });
+  };
+
+  const generateStops = () => {
+    for (let i = 1; i <= 39; i++) {
+      stopIntervals.push(i * intervalSeconds);
+    }
+  };
+
+  const showQuestion = (index) => {
+    if (index < totalQuestions) {
+      questionText.textContent = questions[index];
+      gsap.fromTo("#questionPanel", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 });
+      questionPanel.style.display = "block";
+    } else {
+      questionText.textContent = "🌟 You’ve completed the journey!";
+    }
+  };
+
+  const submitAnswer = (choice) => {
+    console.log(`Answer for Q${currentQuestion + 1}: ${choice}`);
+    currentQuestion++;
+    questionPanel.style.display = "none";
+    video.play();
+  };
+
+  video.addEventListener('timeupdate', () => {
+    const current = Math.floor(video.currentTime);
+    if (stopIntervals.includes(current)) {
+      video.pause();
+      showQuestion(currentQuestion);
+    }
+  });
+
+  window.onload = () => {
+    generateStops();
+    loadLottieReaction();
+  };
+</script>
+
 </body>
 </html>
